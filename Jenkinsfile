@@ -24,5 +24,30 @@ pipeline {
             sh 'mvn package'
         }
         }
+        stage ('into nexus') {
+            steps {
+                sh 'mvn -s settings.xml clean deploy'
+            }
+            post {
+                success {
+                    echo "always"
+                }
+                failure {
+                    echo "failure"
+                }
+
+            }
         }
+    }
+    post {
+        always {
+            echo "always"
+        }
+        success {
+            echo "success"
+        }
+        failure {
+            echo "failure"
+        }
+    }
 }
